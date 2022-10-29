@@ -7,10 +7,12 @@ namespace FactorySimulator
     public class GameController : MonoBehaviour
     {
         Ray ray;
+       
+        private Unit selectedUnit;
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKeyDown(KeyCode.Mouse1))
             {
                 //Debug.Log($"Click left mouse btn");
                 ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -25,6 +27,29 @@ namespace FactorySimulator
                         Debug.Log($"building clicked {building.gameObject.name}");
                         building.AddResource("id1", 3);
                     }
+
+                    Unit unit = hitInfo.collider.GetComponent<Unit>();
+                    if (unit)
+                    {
+                        selectedUnit = unit;
+                        Debug.Log($"Unit clicked");
+                       
+                    }
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                if (selectedUnit)
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit hitInfo;
+
+                    if (Physics.Raycast(ray, out hitInfo))
+                    {
+                        selectedUnit.GoTo(hitInfo.point);
+                    }
+                   
                 }
             }
 
