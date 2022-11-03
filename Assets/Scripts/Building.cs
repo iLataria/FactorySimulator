@@ -7,6 +7,10 @@ namespace FactorySimulator
     public class Building : MonoBehaviour
     {
         [SerializeField] private int initialInventorySpace;
+        [SerializeField] private float productionSpeed;
+        [SerializeField] private string resourceId;
+
+        private float resourceAddTimer;
 
         public class Resource
         {
@@ -23,6 +27,23 @@ namespace FactorySimulator
             inventory = new List<Resource>();
         }
 
+        private void Update()
+        {
+            if (resourceAddTimer > 1.0f)
+            {
+                int amountToAdd = (int)(Math.Truncate(resourceAddTimer));
+                int leftOver = AddResource(resourceId, amountToAdd);
+                
+                //Debug.Log($"leftOver {amountToAdd} {leftOver}");
+                
+                resourceAddTimer = resourceAddTimer - amountToAdd + leftOver;
+            }
+            else
+            {
+                resourceAddTimer += productionSpeed * Time.deltaTime;
+            }
+        }
+
         //Returns 0 if everything fit in the inventory, otherwise return the left over amount
         public int AddResource(string resourceId, int amount)
         {
@@ -32,8 +53,7 @@ namespace FactorySimulator
 
             if (currentInventorySpace == maxInventorySpace)
             {
-                leftOverAmount = 0;
-                return leftOverAmount;
+                return amount;
             }
 
             int found = inventory.FindIndex(resource => resource.Id == resourceId);
@@ -41,9 +61,9 @@ namespace FactorySimulator
 
             if (found == -1)
             {
-                Resource resource = new Resource() 
+                Resource resource = new Resource()
                 {
-                    Id = resourceId, 
+                    Id = resourceId,
                     Amount = amount
                 };
 
@@ -65,13 +85,13 @@ namespace FactorySimulator
             int ableToRemoveAmount = 0;
 
             int found = inventory.FindIndex(resource => resource.Id == resourceId);
-            
+
             if (found != -1)
             {
                 Resource resource = inventory[found];
                 ableToRemoveAmount = Mathf.Min(amount, resource.Amount);
                 resource.Amount -= ableToRemoveAmount;
-                
+
                 if (resource.Amount <= 0)
                 {
                     inventory.RemoveAt(found);
