@@ -13,7 +13,7 @@ namespace FactorySimulator
 
         private Building.Resource currentResource ;
         private Building targetToReturn;
-
+        public int maxCapacity = 5;
         private GameObject markerGO;
         private NavMeshAgent agent;
         private Building target;
@@ -33,12 +33,13 @@ namespace FactorySimulator
             {
                 Debug.Log($"Take resource from building");
                 agent.isStopped = true;
-                if (target.inventory.Count > 0)
+                if (target.inventory.Count <= 0)
                     return;
                 string resourceId = target.inventory[0].Id;
-                int amount = target.inventory[0].Amount;
+                int amount = target.RemoveResource(resourceId, maxCapacity);
                 currentResource.Id = resourceId;
                 currentResource.Amount = amount;
+                target = null;
                 //targetToReturn = target;
                 //GoTo();
             }
@@ -48,6 +49,7 @@ namespace FactorySimulator
         {
             this.target = null;
             Debug.Log($"Go to {position}");
+            agent.isStopped = false;
             agent.SetDestination(position);
         }
 
