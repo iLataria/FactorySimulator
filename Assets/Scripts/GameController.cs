@@ -60,7 +60,16 @@ namespace FactorySimulator
 
                 if (Physics.Raycast(ray, out hitInfo))
                 {
-                    selectedUnit.GoTo(hitInfo.point);
+                    Building building = hitInfo.transform.GetComponent<Building>();
+                    if (building)
+                    {
+                        Debug.Log($"Goto building");
+                        selectedUnit.GoTo(building);
+                    }
+                    else
+                    {
+                        selectedUnit.GoTo(hitInfo.point);
+                    }
                 }
             }
 

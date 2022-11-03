@@ -15,7 +15,7 @@ namespace FactorySimulator
         }
 
         private int maxInventorySpace;
-        private List<Resource> inventory;
+        public List<Resource> inventory;
         private int currentInventorySpace;
 
         private void Awake()

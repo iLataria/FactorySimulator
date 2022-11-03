@@ -3,38 +3,76 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Unit : MonoBehaviour
+namespace FactorySimulator
 {
-    [SerializeField] private float speed;
-    [SerializeField] private GameObject markerPrefab;
-    [SerializeField] private GameObject markerWrapper;
-    
-    private GameObject markerGO;
-    private NavMeshAgent agent;
-
-    private void Awake()
+    public class Unit : MonoBehaviour
     {
-        agent = GetComponent<NavMeshAgent>();
-        agent.speed = speed;
-        
-    }
+        [SerializeField] private float speed;
+        [SerializeField] private GameObject markerPrefab;
+        [SerializeField] private GameObject markerWrapper;
 
-    public void GoTo(Vector3 target)
-    {
-        Debug.Log($"Go to {target}");
-        agent.SetDestination(target);
-    }
+        private Building.Resource currentResource ;
+        private Building targetToReturn;
 
-    public void SetMarkerActive(bool isActive)
-    {
-        if (isActive && markerGO == null)
+        private GameObject markerGO;
+        private NavMeshAgent agent;
+        private Building target;
+
+        private void Awake()
         {
-            markerGO = Instantiate(markerPrefab, markerWrapper.transform.position, Quaternion.identity);
-            markerGO.transform.SetParent(markerWrapper.transform);
+            agent = GetComponent<NavMeshAgent>();
+            agent.speed = speed;
+            currentResource = new Building.Resource();
         }
-        else if(!isActive && markerGO)
+
+        private void Update()
         {
-            Destroy(markerGO);
+            if (!target) return;
+            float distance = Vector3.Distance(transform.position, target.transform.position);
+            if (distance < 1.5f)
+            {
+                Debug.Log($"Take resource from building");
+                agent.isStopped = true;
+                if (target.inventory.Count > 0)
+                    return;
+                string resourceId = target.inventory[0].Id;
+                int amount = target.inventory[0].Amount;
+                currentResource.Id = resourceId;
+                currentResource.Amount = amount;
+                //targetToReturn = target;
+                //GoTo();
+            }
+        }
+
+        public void GoTo(Vector3 position)
+        {
+            this.target = null;
+            Debug.Log($"Go to {position}");
+            agent.SetDestination(position);
+        }
+
+        public void GoTo(Building building)
+        {
+            target = building;
+            if (target == null) return;
+
+            agent.SetDestination(target.transform.position);
+            agent.isStopped = false;
+        }
+
+        public void SetMarkerActive(bool isActive)
+        {
+            if (isActive && markerGO == null)
+            {
+                markerGO = Instantiate(markerPrefab, markerWrapper.transform.position, Quaternion.identity);
+                markerGO.transform.SetParent(markerWrapper.transform);
+            }
+            else if (!isActive && markerGO)
+            {
+                Destroy(markerGO);
+            }
         }
     }
 }
+
+
