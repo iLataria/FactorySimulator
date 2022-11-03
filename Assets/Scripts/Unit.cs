@@ -33,15 +33,31 @@ namespace FactorySimulator
             {
                 Debug.Log($"Take resource from building");
                 agent.isStopped = true;
-                if (target.inventory.Count <= 0)
-                    return;
-                string resourceId = target.inventory[0].Id;
-                int amount = target.RemoveResource(resourceId, maxCapacity);
-                currentResource.Id = resourceId;
-                currentResource.Amount = amount;
-                target = null;
-                //targetToReturn = target;
-                //GoTo();
+
+                if (target == Base.Instance)
+                {
+                    if (currentResource.Amount > 0)
+                    {
+                        Debug.Log($"Unload resource at base");
+                        target.AddResource(currentResource.Id, currentResource.Amount);
+                        currentResource.Id = "";
+                        currentResource.Amount = 0;
+                        GoTo(targetToReturn);
+                    }
+                }
+                else
+                {
+                    if (target.inventory.Count <= 0)
+                        return;
+
+                    string resourceId = target.inventory[0].Id;
+                    int amount = target.RemoveResource(resourceId, maxCapacity);
+                    currentResource.Id = resourceId;
+                    currentResource.Amount = amount;
+                    targetToReturn = target;
+                    GoTo(Base.Instance);
+                }
+            
             }
         }
 

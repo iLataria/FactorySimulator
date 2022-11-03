@@ -22,7 +22,7 @@ namespace FactorySimulator
         public List<Resource> inventory;
         private int currentInventorySpace;
 
-        private void Awake()
+        virtual protected void Awake()
         {
             inventory = new List<Resource>();
         }
