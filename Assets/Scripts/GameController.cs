@@ -22,12 +22,12 @@ namespace FactorySimulator
                 if (Physics.Raycast(ray, out hitInfo))
                 {
                     Debug.Log($"Ray hitted {hitInfo.collider.name}");
-                    Building building = hitInfo.collider.GetComponent<Building>();
-                    if (building)
-                    {
-                        Debug.Log($"building clicked {building.gameObject.name}");
-                        building.AddResource("id1", 3);
-                    }
+                    //Building building = hitInfo.collider.GetComponent<Building>();
+                    //if (building)
+                    //{
+                    //    Debug.Log($"building clicked {building.gameObject.name}");
+                    //    building.AddResource("table", 3);
+                    //}
 
                     Unit unit = hitInfo.collider.GetComponent<Unit>();
                     if (unit)
@@ -49,6 +49,9 @@ namespace FactorySimulator
                             selectedUnit = null;
                         }
                     }
+
+                    IUIContent content = hitInfo.transform.GetComponent<IUIContent>();
+                    UIController.Instance.SetCurrentContent(content);
                 }
             }
 

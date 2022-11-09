@@ -4,7 +4,7 @@ using System;
 
 namespace FactorySimulator
 {
-    public class Building : MonoBehaviour
+    public class Building : MonoBehaviour, IUIContent
     {
         [SerializeField] private int initialInventorySpace;
         [SerializeField] private float productionSpeed;
@@ -12,6 +12,7 @@ namespace FactorySimulator
 
         private float resourceAddTimer;
 
+        [Serializable]
         public class Resource
         {
             public string Id;
@@ -68,6 +69,7 @@ namespace FactorySimulator
                 };
 
                 inventory.Add(resource);
+                Debug.Log($"Added {inventory.Count}");
             }
             else
             {
@@ -106,6 +108,17 @@ namespace FactorySimulator
         public void GetContent(ref List<Resource> inventory)
         {
             inventory.AddRange(this.inventory);
+            //Debug.Log($"{this.inventory[0].Amount}");
+        }
+
+        public string GetName()
+        {
+            return gameObject.name;
+        }
+
+        public string GetData()
+        {
+            return "building";
         }
     }
 }
