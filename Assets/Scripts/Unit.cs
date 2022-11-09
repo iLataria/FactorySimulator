@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 namespace FactorySimulator
 {
-    public class Unit : MonoBehaviour
+    public class Unit : MonoBehaviour, IUIContent
     {
         [SerializeField] private float speed;
         [SerializeField] private GameObject markerPrefab;
@@ -29,7 +29,7 @@ namespace FactorySimulator
         {
             if (!target) return;
             float distance = Vector3.Distance(transform.position, target.transform.position);
-            if (distance < 1.5f)
+            if (distance < 1f)
             {
                 Debug.Log($"Take resource from building");
                 agent.isStopped = true;
@@ -89,6 +89,21 @@ namespace FactorySimulator
             {
                 Destroy(markerGO);
             }
+        }
+
+        public string GetName()
+        {
+            return gameObject.name;
+        }
+
+        public string GetData()
+        {
+            return "Just some unit";
+        }
+
+        public void GetContent(ref List<Building.Resource> content)
+        {
+            
         }
     }
 }

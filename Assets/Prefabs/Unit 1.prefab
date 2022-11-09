@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 8111363172015242914}
   - component: {fileID: 8111363172015242927}
   - component: {fileID: 8111363172015242926}
+  - component: {fileID: -3989133269645845943}
   m_Layer: 0
   m_Name: Unit 1
   m_TagString: Untagged
@@ -168,3 +169,20 @@ MonoBehaviour:
   speed: 3
   markerPrefab: {fileID: 5599676633581769598, guid: 1ae8df758c69d0446aaa7b039420a4a8, type: 3}
   markerWrapper: {fileID: 6834893906702695739}
+  maxCapacity: 0
+--- !u!208 &-3989133269645845943
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8111363172015242916}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
