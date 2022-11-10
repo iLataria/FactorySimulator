@@ -10,7 +10,6 @@ namespace FactorySimulator
         [SerializeField] private GameObject marker;
 
         private Unit selectedUnit;
-        private Unit prevSelectedUnit;
 
         private void Update()
         {
@@ -25,8 +24,6 @@ namespace FactorySimulator
 
                 if (Physics.Raycast(ray, out hitInfo))
                 {
-                    Debug.Log($"Ray hitted to collider on {hitInfo.collider.name}");
-
                     Unit unit = hitInfo.collider.GetComponent<Unit>();
                     selectedUnit = unit;
 
@@ -37,9 +34,8 @@ namespace FactorySimulator
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Mouse0) && selectedUnit)
+            if (Input.GetKeyDown(KeyCode.Mouse1) && selectedUnit)
             {
-
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hitInfo;
 
@@ -48,7 +44,6 @@ namespace FactorySimulator
                     Building building = hitInfo.transform.GetComponent<Building>();
                     if (building)
                     {
-                        Debug.Log($"Goto building");
                         selectedUnit.GoTo(building);
                     }
                     else
@@ -57,24 +52,6 @@ namespace FactorySimulator
                     }
                 }
             }
-
-            //if (Input.GetKeyDown(KeyCode.Space))
-            //{
-            //    //Debug.Log($"Click left mouse btn");
-            //    ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            //    RaycastHit hitInfo;
-
-            //    if (Physics.Raycast(ray, out hitInfo))
-            //    {
-            //        Debug.Log($"Ray hitted {hitInfo.collider.name}");
-            //        Building building = hitInfo.collider.GetComponent<Building>();
-            //        if (building)
-            //        {
-            //            Debug.Log($"building clicked {building.gameObject.name}");
-            //            building.RemoveResource("id1", 3);
-            //        }
-            //    }
-            //}
         }
 
         private void MarkerHandling()
@@ -91,14 +68,6 @@ namespace FactorySimulator
                 marker.SetActive(false);
                 marker.transform.SetParent(null, false);
             }
-        }
-
-        private void OnDrawGizmos()
-        {
-            //Debug.Log($"Draw");
-            //Gizmos.color = Color.red;
-            //Gizmos.DrawRay(ray);
-            //Gizmos.DrawLine(ray.origin, (ray.direction));
         }
     }
 }
