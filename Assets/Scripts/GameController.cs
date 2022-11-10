@@ -6,6 +6,7 @@ namespace FactorySimulator
 {
     public class GameController : MonoBehaviour
     {
+        [SerializeField] private float cameraPanSpeed;
         Ray ray;
 
         private Unit selectedUnit;
@@ -13,6 +14,10 @@ namespace FactorySimulator
 
         private void Update()
         {
+            Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            Vector3 cameraOffset = new Vector3(input.x, 0f, input.y);
+            Camera.main.transform.position = Camera.main.transform.position += cameraOffset * cameraPanSpeed * Time.deltaTime;
+
             if (Input.GetKeyDown(KeyCode.Mouse1))
             {
                 //Debug.Log($"Click left mouse btn");
