@@ -43,7 +43,7 @@ namespace FactorySimulator
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Mouse0) && selectedUnit)
+            if (Input.GetKeyDown(KeyCode.Mouse1) && selectedUnit)
             {
 
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
