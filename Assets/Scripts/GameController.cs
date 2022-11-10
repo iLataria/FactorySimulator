@@ -7,7 +7,7 @@ namespace FactorySimulator
     public class GameController : MonoBehaviour
     {
         [SerializeField] private float cameraPanSpeed;
-        Ray ray;
+        [SerializeField] private GameObject marker;
 
         private Unit selectedUnit;
         private Unit prevSelectedUnit;
@@ -16,17 +16,16 @@ namespace FactorySimulator
         {
             Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             Vector3 cameraOffset = new Vector3(input.x, 0f, input.y);
-            Camera.main.transform.position = Camera.main.transform.position += cameraOffset * cameraPanSpeed * Time.deltaTime;
+            Camera.main.transform.position += cameraOffset * cameraPanSpeed * Time.deltaTime;
 
-            if (Input.GetKeyDown(KeyCode.Mouse1))
+            if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                //Debug.Log($"Click left mouse btn");
-                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hitInfo;
 
                 if (Physics.Raycast(ray, out hitInfo))
                 {
-                    Debug.Log($"Ray hitted {hitInfo.collider.name}");
+                    Debug.Log($"Ray hitted to collider on {hitInfo.collider.name}");
                     //Building building = hitInfo.collider.GetComponent<Building>();
                     //if (building)
                     //{
@@ -35,28 +34,12 @@ namespace FactorySimulator
                     //}
 
                     Unit unit = hitInfo.collider.GetComponent<Unit>();
-                    if (unit)
-                    {
-                        if (selectedUnit != null)
-                        {
-                            selectedUnit.SetMarkerActive(false);
-                        }
-                        selectedUnit = unit;
-                      
-                        selectedUnit.SetMarkerActive(true);
-                        Debug.Log($"Unit clicked");
-                    }
-                    else
-                    {
-                        if (selectedUnit)
-                        {
-                            selectedUnit.SetMarkerActive(false);
-                            selectedUnit = null;
-                        }
-                    }
+                    selectedUnit = unit;
+                    
 
                     IUIContent content = hitInfo.transform.GetComponent<IUIContent>();
                     UIController.Instance.SetCurrentContent(content);
+                    MarkerHandling();
                 }
             }
 
@@ -81,22 +64,38 @@ namespace FactorySimulator
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                //Debug.Log($"Click left mouse btn");
-                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hitInfo;
+            //if (Input.GetKeyDown(KeyCode.Space))
+            //{
+            //    //Debug.Log($"Click left mouse btn");
+            //    ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //    RaycastHit hitInfo;
 
-                if (Physics.Raycast(ray, out hitInfo))
-                {
-                    Debug.Log($"Ray hitted {hitInfo.collider.name}");
-                    Building building = hitInfo.collider.GetComponent<Building>();
-                    if (building)
-                    {
-                        Debug.Log($"building clicked {building.gameObject.name}");
-                        building.RemoveResource("id1", 3);
-                    }
-                }
+            //    if (Physics.Raycast(ray, out hitInfo))
+            //    {
+            //        Debug.Log($"Ray hitted {hitInfo.collider.name}");
+            //        Building building = hitInfo.collider.GetComponent<Building>();
+            //        if (building)
+            //        {
+            //            Debug.Log($"building clicked {building.gameObject.name}");
+            //            building.RemoveResource("id1", 3);
+            //        }
+            //    }
+            //}
+        }
+
+        private void MarkerHandling()
+        {
+            if (selectedUnit && marker.transform.parent != selectedUnit.transform)
+            {
+                marker.SetActive(true);
+                marker.transform.SetParent(selectedUnit.transform, false);
+                Vector3 markerNewPos = Vector3.up * 1.5f;
+                marker.transform.localPosition = markerNewPos;
+            }
+            else if(!selectedUnit && marker.activeInHierarchy)
+            {
+                marker.SetActive(false);
+                marker.transform.SetParent(null, false);
             }
         }
 
