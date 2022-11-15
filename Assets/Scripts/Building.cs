@@ -6,12 +6,8 @@ namespace FactorySimulator
 {
     public class Building : MonoBehaviour, IUIContent
     {
-        [SerializeField] private int initialInventorySpace;
-        [SerializeField] private float productionSpeed;
-        [SerializeField] private string resourceId;
-
-        private float resourceAddTimer;
-
+        [SerializeField] private int initialInventorySize;
+        
         [Serializable]
         public class Resource
         {
@@ -28,33 +24,16 @@ namespace FactorySimulator
             inventory = new List<Resource>();
         }
 
-        private void Update()
-        {
-            if (resourceAddTimer > 1.0f)
-            {
-                int amountToAdd = (int)(Math.Truncate(resourceAddTimer));
-                int leftOver = AddResource(resourceId, amountToAdd);
-                
-                //Debug.Log($"leftOver {amountToAdd} {leftOver}");
-                
-                resourceAddTimer = resourceAddTimer - amountToAdd + leftOver;
-            }
-            else
-            {
-                resourceAddTimer += productionSpeed * Time.deltaTime;
-            }
-        }
-
-        //Returns 0 if everything fit in the inventory, otherwise return the left over amount
         public int AddResource(string resourceId, int amount)
         {
             int leftOverAmount;
 
-            maxInventorySpace = initialInventorySpace == -1 ? Int32.MaxValue : initialInventorySpace;
+            maxInventorySpace = initialInventorySize == -1 ? Int32.MaxValue : initialInventorySize;
 
             if (currentInventorySpace == maxInventorySpace)
             {
-                return amount;
+                leftOverAmount = amount;
+                return leftOverAmount;
             }
 
             int found = inventory.FindIndex(resource => resource.Id == resourceId);
@@ -69,7 +48,6 @@ namespace FactorySimulator
                 };
 
                 inventory.Add(resource);
-                Debug.Log($"Added {inventory.Count}");
             }
             else
             {
@@ -81,7 +59,6 @@ namespace FactorySimulator
             return leftOverAmount;
         }
 
-        //Returns how much was actually removed. 0 if cant get any.
         public int RemoveResource(string resourceId, int amount)
         {
             int ableToRemoveAmount = 0;
@@ -108,7 +85,6 @@ namespace FactorySimulator
         public void GetContent(ref List<Resource> inventory)
         {
             inventory.AddRange(this.inventory);
-            //Debug.Log($"{this.inventory[0].Amount}");
         }
 
         public string GetName()
