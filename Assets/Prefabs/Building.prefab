@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4449540097277737280}
   - component: {fileID: 1144469334647742101}
   - component: {fileID: 1618309457042873047}
-  - component: {fileID: -6054669529325656438}
+  - component: {fileID: 2926306791212190785}
   m_Layer: 0
   m_Name: Building
   m_TagString: Untagged
@@ -98,7 +98,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-6054669529325656438
+--- !u!114 &2926306791212190785
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,7 +107,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 131802974591690054}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad3ecfe9d589f4b4b8d6fb6be0b9f6c9, type: 3}
+  m_Script: {fileID: 11500000, guid: 63027cee25acaed4c9a3f67b7eef4406, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialInventorySpace: 10
+  initialInventorySize: 0
+  inventory: []
+  resourceId: 
+  productionSpeed: 1
