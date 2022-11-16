@@ -11,13 +11,13 @@ namespace FactorySimulator
         [SerializeField] private GameObject markerPrefab;
         [SerializeField] private GameObject markerWrapper;
 
-        private Building.Resource currentResource ;
+        private Building.Resource currentResource;
         private Building targetToReturn;
         public int maxCapacity = 5;
         private GameObject markerGO;
         private NavMeshAgent agent;
         private Building target;
-
+        
         private void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
@@ -103,7 +103,10 @@ namespace FactorySimulator
 
         public void GetContent(ref List<Building.Resource> content)
         {
-            
+            if (currentResource.Amount > 0)
+            {
+                content.Add(currentResource);
+            }
         }
     }
 }

@@ -1518,6 +1518,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2926306791212190785, guid: b7bbd7faf432f3b4bb40c2465a5e4b33, type: 3}
+      propertyPath: resourceItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 644bfd9739538094e9d69d8c478e960f, type: 2}
+    - target: {fileID: 2926306791212190785, guid: b7bbd7faf432f3b4bb40c2465a5e4b33, type: 3}
       propertyPath: initialInventorySize
       value: 3
       objectReference: {fileID: 0}
@@ -1846,6 +1850,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Building
       objectReference: {fileID: 0}
+    - target: {fileID: 2926306791212190785, guid: b7bbd7faf432f3b4bb40c2465a5e4b33, type: 3}
+      propertyPath: resourceItem
+      value: 
+      objectReference: {fileID: 11400000, guid: d505758f2cf160b41a4f9989706df274, type: 2}
     - target: {fileID: 2926306791212190785, guid: b7bbd7faf432f3b4bb40c2465a5e4b33, type: 3}
       propertyPath: initialInventorySize
       value: 3
