@@ -7,10 +7,11 @@ namespace FactorySimulator
     public class UIController : MonoBehaviour
     {
         public static UIController Instance;
-        public ResourceDB resourceDB;
-        private IUIContent currentUIContent;
+
+        [SerializeField] private ResourceDB resourceDB;
         [SerializeField] private InfoPopup popup;
 
+        private IUIContent currentUIContent;
         private List<Building.Resource> resourceBuffer;
 
         private void Awake()
@@ -31,10 +32,7 @@ namespace FactorySimulator
 
             foreach (var item in resourceBuffer)
             {
-                Sprite icon = null;
-                icon = resourceDB?.GetItem(item.Id)?.Icon;
-
-                //set item icon to popup
+                Sprite icon = resourceDB?.GetItem(item.Id)?.Icon;
                 popup.AddContent(icon, item.Amount);
             }
         }
