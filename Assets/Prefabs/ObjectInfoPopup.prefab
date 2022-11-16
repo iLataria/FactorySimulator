@@ -220,6 +220,7 @@ GameObject:
   - component: {fileID: 332553409452465833}
   - component: {fileID: 8289615821794268286}
   - component: {fileID: 130481008946785871}
+  - component: {fileID: 6546261660118429480}
   m_Layer: 5
   m_Name: ObjectInfoPopup
   m_TagString: Untagged
@@ -271,7 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.6039216}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -288,6 +289,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6546261660118429480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3666986703609705801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba09031ce08c72478b162060c32f229, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  header: {fileID: 4260427527474394378}
+  data: {fileID: 5304644570620337385}
+  contentHolder: {fileID: 866165616697055415}
+  contentEntryPrefab: {fileID: 8254903683732937590, guid: 7f48423ab9fd29f4bbdc7aafd21ddd5d, type: 3}
 --- !u!1 &4451844995144437396
 GameObject:
   m_ObjectHideFlags: 0
