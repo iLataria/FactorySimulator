@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace FactorySimulator
 {
@@ -9,6 +10,7 @@ namespace FactorySimulator
         [SerializeField] private float cameraPanSpeed;
         [SerializeField] private GameObject marker;
 
+        
         private Unit selectedUnit;
 
         private void Update()
@@ -68,6 +70,11 @@ namespace FactorySimulator
                 marker.SetActive(false);
                 marker.transform.SetParent(null, false);
             }
+        }
+
+        public void StartLevel(int index)
+        {
+            SceneManager.LoadScene(index);
         }
     }
 }
